@@ -1,7 +1,6 @@
 import * as tap from 'tap';
 import * as Proxyquire from 'proxyquire';
-// tslint:disable-next-line
-const osName = require('os-name');
+import osName = require('os-name');
 import * as sinon from 'sinon';
 import * as snyk from '../src/lib';
 let old;
@@ -31,7 +30,7 @@ test('analytics disabled', (t) => {
     './request': spy,
   });
 
-  return analytics().then(() => {
+  return analytics.analytics().then(() => {
     t.equal(spy.called, false, 'the request should not have been made');
   });
 });
@@ -44,7 +43,7 @@ test('analytics', (t) => {
 
   analytics.add('foo', 'bar');
 
-  return analytics({
+  return analytics.analytics({
     command: '__test__',
     args: [],
   }).then(() => {

@@ -1,6 +1,6 @@
 import * as needle from 'needle';
 import * as fs from 'fs';
-import * as analytics from '../analytics';
+import {analytics} from '../analytics';
 import * as debugModule from 'debug';
 import * as proxyFromEnv from 'proxy-from-env';
 import * as ProxyAgent from 'proxy-agent';

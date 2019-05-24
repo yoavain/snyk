@@ -3,7 +3,7 @@ const debug = baseDebug('snyk');
 import * as path from 'path';
 import * as spinner from '../../spinner';
 import * as _ from 'lodash';
-import * as analytics from '../../analytics';
+import {analytics} from '../../analytics';
 import * as fs from 'fs';
 import * as lockFileParser from 'snyk-nodejs-lockfile-parser';
 import {PkgTree} from 'snyk-nodejs-lockfile-parser';

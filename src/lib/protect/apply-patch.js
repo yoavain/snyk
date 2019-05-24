@@ -6,7 +6,7 @@ var exec = require('child_process').exec;
 var path = require('path');
 var fs = require('fs');
 var uuid = require('uuid/v4');
-var errorAnalytics = require('../analytics').single;
+var analytics = require('../analytics');
 
 function applyPatch(patchFileName, vuln, live, patchUrl) {
   var cwd = vuln.source;
@@ -143,7 +143,7 @@ function patchError(error, dir, vuln, patchUrl) {
       var filename = path.relative(process.cwd(), dir);
 
       // post metadata to help diagnose
-      errorAnalytics({
+      analytics.postAnalytics({
         command: 'patch-fail',
         metadata: {
           from: vuln.from.slice(1),

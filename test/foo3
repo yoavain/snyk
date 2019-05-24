@@ -1,0 +1,41 @@
+ now:
+ snyk test { _: [ 'bundler-app', [Circular] ], debug: true, json: true } +0ms
+  snyk no file specified. Trying to autodetect in base folder bundler-app +0ms
+  snyk found package file Gemfile in bundler-app +2ms
+  snyk analytics add local true +0ms
+  snyk found package file Gemfile in bundler-app +2ms
+  snyk analytics add policies 1 +21ms
+  snyk analytics add packageManager rubygems +0ms
+  snyk analytics add packageName bundler-app +0ms
+  snyk analytics add packageVersion undefined +0ms
+  snyk analytics add package bundler-app@undefined +0ms
+  snyk sending request to: https://snyk.io/api/v1/test-dep-graph +0ms
+  snyk request body size: 796 +0ms
+  snyk gzipped request body size: 283 +0ms
+  snyk analytics add payloadSize 796 +10ms
+  snyk analytics add gzippedPayloadSize 283 +0ms
+  snyk not using proxy +1ms
+  snyk analytics add vulns-pre-policy 7 +693ms
+  snyk analytics add vulns 7 +5ms
+  snyk analytics add error-message {
+
+=============================
+lili@ ~/www/monorepo-simple (master) $ snyk-dev test bundler-app -d --json
+  snyk test { _: [ 'bundler-app', [Circular] ], debug: true, json: true } +0ms
+  snyk analytics add local true +0ms
+  snyk policies found [ 'bundler-app' ] +0ms
+  snyk analytics add policies 1 +12ms
+  snyk analytics add packageManager npm +1ms
+  snyk analytics add packageName bundler-app +0ms
+  snyk analytics add packageVersion undefined +0ms
+  snyk analytics add package bundler-app@undefined +0ms
+  snyk converting dep-tree to dep-graph { name: 'bundler-app', targetFile: 'Gemfile' } +2ms
+  snyk done converting dep-tree to dep-graph { uniquePkgsCount: 4 } +7ms
+  snyk sending request to: https://snyk.io/api/v1/test-dep-graph +0ms
+  snyk request body size: 796 +0ms
+  snyk gzipped request body size: 280 +0ms
+  snyk analytics add payloadSize 796 +12ms
+  snyk analytics add gzippedPayloadSize 280 +0ms
+  snyk not using proxy +1ms
+  snyk analytics add vulns-pre-policy 7 +620ms
+  snyk analytics add vulns

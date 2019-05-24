@@ -5,7 +5,7 @@ import * as Debug from 'debug';
 // assert supported node runtime version
 import * as runtime from './runtime';
 // require analytics as soon as possible to start measuring execution time
-import * as analytics from '../lib/analytics';
+import {analytics} from '../lib/analytics';
 import * as alerts from '../lib/alerts';
 import * as sln from '../lib/sln';
 import {args as argsLib} from './args';

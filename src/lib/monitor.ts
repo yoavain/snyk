@@ -5,7 +5,7 @@ import * as config from './config';
 import * as os from 'os';
 import * as _ from 'lodash';
 import {isCI} from './is-ci';
-import * as analytics from './analytics';
+import {analytics} from './analytics';
 import { SingleDepRootResult, MonitorError } from './types';
 import * as projectMetadata from './project-metadata';
 import * as path from 'path';

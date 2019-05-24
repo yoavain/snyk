@@ -1,7 +1,7 @@
 import * as path from 'path';
 import * as snyk from '../../index';
 import * as spinner from '../../spinner';
-import * as analytics from '../../analytics';
+import {analytics} from '../../analytics';
 import * as fs from 'then-fs';
 import {PkgTree} from 'snyk-nodejs-lockfile-parser';
 import {Options} from '../types';

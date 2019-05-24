@@ -1,0 +1,40 @@
+lili@ ~/www/monorepo-simple (master) $ snyk banana -d
+  snyk analytics add error-message Unknown command "banana" +0ms
+  snyk analytics { args: [ 'banana' ],
+  command: 'bad-command',
+  metadata:
+   { 'error-message': 'Unknown command "banana"',
+     error: 'Error: Unknown command "banana"\n    at Object.error [as method] (/Users/lili/.nvm/versions/node/v6.14.1/lib/node_modules/snyk/src/lib/error.js:69:11)\n    at /Users/lili/.nvm/versions/node/v6.14.1/lib/node_modules/snyk/src/cli/index.ts:19:35\n    at step (/Users/lili/.nvm/versions/node/v6.14.1/lib/node_modules/snyk/dist/cli/index.js:33:23)\n    at Object.next (/Users/lili/.nvm/versions/node/v6.14.1/lib/node_modules/snyk/dist/cli/index.js:14:53)\n    at /Users/lili/.nvm/versions/node/v6.14.1/lib/node_modules/snyk/dist/cli/index.js:8:71\n    at __awaiter (/Users/lili/.nvm/versions/node/v6.14.1/lib/node_modules/snyk/dist/cli/index.js:4:12)\n    at runCommand (/Users/lili/.nvm/versions/node/v6.14.1/lib/node_modules/snyk/dist/cli/index.js:54:12)\n    at /Users/lili/.nvm/versions/node/v6.14.1/lib/node_modules/snyk/src/cli/index.ts:126:17\n    at step (/Users/lili/.nvm/versions/node/v6.14.1/lib/node_modules/snyk/dist/cli/index.js:33:23)\n    at Object.next (/Users/lili/.nvm/versions/node/v6.14.1/lib/node_modules/snyk/dist/cli/index.js:14:53)',
+     'error-code': 'UNKNOWN_COMMAND',
+     command: 'banana' },
+  version: '1.135.1',
+  os: 'macOS High Sierra',
+  nodeVersion: 'v6.14.1',
+  id: 'ea469c29eafef1601cea572fd12a4f03fe4525b5',
+  ci: false,
+  durationMs: 50 } +4ms
+  snyk sending request to: https://snyk.io/api/v1/analytics/cli +0ms
+  snyk request body size: 1368 +0ms
+  snyk gzipped request body size: 424 +0ms
+  snyk not using proxy +1ms
+
+
+
+=========================
+
+snyk-dev banana -d
+  snyk banana { _: [ 'banana' ], debug: true } +0ms
+
+  snyk Exit code: 2 +0ms
+  snyk analytics { args: [ 'banana' ],
+  command: 'bad-command',
+  version: 'feat/error-exit-code-1: abf1e7860803fc93c46f26a8eb9645e40ca067d5 (3 dirty files)',
+  os: 'macOS High Sierra',
+  nodeVersion: 'v6.14.1',
+  id: '8b977b172a9143b9a82984e14e60154057f39c1c',
+  ci: false,
+  durationMs: 187 } +56ms
+  snyk sending request to: https://snyk.io/api/v1/analytics/cli +0ms
+  snyk request body size: 270 +0ms
+  snyk gzipped request body size: 229 +0ms
+  snyk not using proxy +1ms
