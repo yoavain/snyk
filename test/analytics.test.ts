@@ -1,18 +1,21 @@
-var tap = require('tap');
-var test = require('tap').test;
-var proxyquire = require('proxyquire').noPreserveCache();
-var sinon = require('sinon');
-var snyk = require('../src/lib');
-var old;
-var iswindows = require('os-name')().toLowerCase().indexOf('windows') === 0;
+import * as tap from 'tap';
+import * as Proxyquire from 'proxyquire';
+// tslint:disable-next-line
+const osName = require('os-name');
+import * as sinon from 'sinon';
+import * as snyk from '../src/lib';
+let old;
+const iswindows = osName().toLowerCase().indexOf('windows') === 0;
+const proxyquire = Proxyquire.noPreserveCache();
+const {test} = tap;
 
-tap.beforeEach(function (done) {
+tap.beforeEach((done) => {
   old = snyk.config.get('disable-analytics');
   snyk.config.delete('disable-analytics');
   done();
 });
 
-tap.afterEach(function (done) {
+tap.afterEach((done) => {
   if (old === undefined) {
     snyk.config.delete('disable-analytics');
   } else {
@@ -21,21 +24,21 @@ tap.afterEach(function (done) {
   done();
 });
 
-test('analytics disabled', function (t) {
-  var spy = sinon.spy();
+test('analytics disabled', (t) => {
+  const spy = sinon.spy();
   snyk.config.set('disable-analytics', '1');
-  var analytics = proxyquire('../src/lib/analytics', {
+  const analytics = proxyquire('../src/lib/analytics', {
     './request': spy,
   });
 
-  return analytics().then(function () {
+  return analytics().then(() => {
     t.equal(spy.called, false, 'the request should not have been made');
   });
 });
 
-test('analytics', function (t) {
-  var spy = sinon.spy();
-  var analytics = proxyquire('../src/lib/analytics', {
+test('analytics', (t) => {
+  const spy = sinon.spy();
+  const analytics = proxyquire('../src/lib/analytics', {
     './request': spy,
   });
 
@@ -44,25 +47,27 @@ test('analytics', function (t) {
   return analytics({
     command: '__test__',
     args: [],
-  }).then(function () {
-    var body = spy.lastCall.args[0].body.data;
-    t.deepEqual(Object.keys(body).sort(), ['command', 'os', 'version', 'id', 'ci', 'metadata', 'args', 'nodeVersion', 'durationMs'].sort(), 'keys as expected');
+  }).then(() => {
+    const body = spy.lastCall.args[0].body.data;
+    t.deepEqual(Object.keys(body).sort(),
+      ['command', 'os', 'version', 'id', 'ci', 'metadata', 'args', 'nodeVersion', 'durationMs'].sort(),
+      'keys as expected');
   });
 });
 
-test('bad command', function (t) {
-  var spy = sinon.spy();
+test('bad command', (t) => {
+  const spy = sinon.spy();
   process.argv = ['node', 'script.js', 'random command', '-q'];
-  var cli = proxyquire('../src/cli', {
+  const cli = proxyquire('../src/cli', {
     '../lib/analytics': proxyquire('../src/lib/analytics', {
       './request': spy,
-    })
+    }),
   });
 
-  return cli.then(function () {
+  return cli.then(() => {
     t.equal(spy.callCount, 1, 'analytics was called');
 
-    var payload = spy.args[0][0].body;
+    const payload = spy.args[0][0].body;
     t.equal(payload.data.command, 'bad-command', 'correct event name');
     t.equal(payload.data.metadata.command, 'random command', 'found original command');
     t.equal(payload.data.metadata['error-message'],
@@ -70,10 +75,10 @@ test('bad command', function (t) {
   });
 });
 
-test('bad command with string error', function (t) {
-  var spy = sinon.spy();
+test('bad command with string error', (t) => {
+  const spy = sinon.spy();
   process.argv = ['node', 'script.js', 'test', '-q'];
-  var cli = proxyquire('../src/cli', {
+  const cli = proxyquire('../src/cli', {
     '../lib/analytics': proxyquire('../src/lib/analytics', {
       './request': spy,
     }),
@@ -82,36 +87,36 @@ test('bad command with string error', function (t) {
       './commands': proxyquire('../src/cli/commands', {
         '../../lib/hotload': proxyquire('../src/lib/hotload', {
           // windows-based testing uses windows path separator
-          '..\\cli\\commands\\test': function() {
+          '..\\cli\\commands\\test'() {
             return Promise.reject('string error');
           },
-          '../cli/commands/test': function()  {
+          '../cli/commands/test'()  {
             return Promise.reject('string error');
-          }
-        })
-      })
-    })
+          },
+        }),
+      }),
+    }),
   });
 
-  return cli.then(function () {
+  return cli.then(() => {
     t.equal(spy.callCount, 1, 'analytics was called');
 
-    var payload = spy.args[0][0].body;
+    const payload = spy.args[0][0].body;
     t.equal(payload.data.command, 'bad-command', 'correct event name');
     t.equal(payload.data.metadata.command, 'test', 'found original command');
     t.equal(payload.data.metadata.error, '"string error"', 'got correct error');
   });
 });
 
-test('test includes data', { skip: iswindows }, function (t) {
-  var spy = sinon.spy();
+test('test includes data', { skip: iswindows }, (t) => {
+  const spy = sinon.spy();
   process.argv = ['node', 'script.js', 'test', 'snyk-demo-app', '-q'];
 
-  var analytics = proxyquire('../src/lib/analytics', {
+  const analytics = proxyquire('../src/lib/analytics', {
     './request': spy,
   });
 
-  var cli = proxyquire('../src/cli', {
+  const cli = proxyquire('../src/cli', {
     '../lib/analytics': analytics,
     './args': proxyquire('../src/cli/args', {
       './commands': proxyquire('../src/cli/commands', {
@@ -119,17 +124,17 @@ test('test includes data', { skip: iswindows }, function (t) {
           '../cli/commands/test': proxyquire('../src/lib/snyk-test', {
             './run-test': proxyquire('../src/lib/snyk-test/run-test', {
               '../analytics': analytics,
-            })
-          })
-        })
-      })
+            }),
+          }),
+        }),
+      }),
     }),
   });
 
-  return cli.then(function () {
+  return cli.then(() => {
     t.equal(spy.callCount, 1, 'analytics was called');
 
-    var payload = spy.args[0][0].body;
+    const payload = spy.args[0][0].body;
     t.equal(payload.data.command, 'test', 'correct event name');
     t.equal(payload.data.metadata.package, 'snyk-demo-app@*', 'includes package');
   });
