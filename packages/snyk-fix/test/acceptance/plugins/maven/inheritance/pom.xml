@@ -5,12 +5,14 @@
 	<groupId>com.example</groupId>
 	<artifactId>parent</artifactId>
   <version>2.0.0.RELEASE</version>
+	<packaging>pom</packaging>
 	<name>my-app</name>
 	<description>Demo project</description>
 
 	<properties>
 		<java.version>1.8</java.version>
-		<spring.boot.web>2.2.1-RELEASE</spring.boot.web>
+		<!-- REMEDIATE HERE! spring.boot.web>2.4.4</spring.boot.web -->
+		<spring.boot.web>1.5.8</spring.boot.web->
 	</properties>
 
 	<dependencyManagement>
