@@ -22,7 +22,7 @@ import {
 } from './update-dependencies/requirements-file-parser';
 import { standardizePackageName } from './update-dependencies/standardize-package-name';
 import { containsRequireDirective } from './contains-require-directive';
-import { validateRequiredData } from '../valdidate-required-data';
+import { validateRequiredData } from '../validate-required-data';
 
 const debug = debugLib('snyk-fix:python:requirements.txt');
 

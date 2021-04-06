@@ -2,6 +2,7 @@ import * as chalk from 'chalk';
 
 import { FixHandlerResultByPlugin } from '../../plugins/types';
 import { ErrorsByEcoSystem, Issue, TestResult } from '../../types';
+import { contactSupportMessage, reTryMessage } from '../errors/common';
 import { convertErrorToUserMessage } from '../errors/error-to-user-message';
 import { hasFixableIssues } from '../issues/fixable-issues';
 import { getIssueCountBySeverity } from '../issues/issues-by-severity';
@@ -32,13 +33,15 @@ export async function showResultsSummary(
   const fixedIssuesSummary = `${chalk.bold(
     calculateFixedIssues(resultsByPlugin),
   )} fixed issues`;
+  const getHelpText = chalk.red(`\n${reTryMessage}. ${contactSupportMessage}`);
+
   return `\n${successfulFixesSummary}${
     unresolvedSummary ? `\n\n${unresolvedSummary}` : ''
   }${
     unresolvedCount || changedCount
       ? `\n\n${overallSummary}\n${vulnsSummary}\n${PADDING_SPACE}${fixedIssuesSummary}`
       : ''
-  }`;
+  }${unresolvedSummary ? `\n\n${getHelpText}` : ''}`;
 }
 
 export function generateSuccessfulFixesSummary(
@@ -90,7 +93,11 @@ export function generateUnresolvedSummary(
         '\n\n' +
         failed
           .map((s) =>
-            formatUnresolved(s.original, convertErrorToUserMessage(s.error)),
+            formatUnresolved(
+              s.original,
+              convertErrorToUserMessage(s.error),
+              s.tip,
+            ),
           )
           .join('\n\n');
     }

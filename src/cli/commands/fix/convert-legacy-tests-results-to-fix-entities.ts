@@ -15,6 +15,7 @@ export function convertLegacyTestResultToFixEntities(
   const oldResults = Array.isArray(testResults) ? testResults : [testResults];
   return oldResults.map((res) => ({
     workspace: {
+      path: root,
       readFile: async (path: string) => {
         return fs.readFileSync(pathLib.resolve(root, path), 'utf8');
       },

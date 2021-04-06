@@ -177,6 +177,7 @@ export enum SEVERITY {
 export type SupportedScanTypes = 'pip';
 
 export interface Workspace {
+  path: string;
   readFile: (path: string) => Promise<string>;
   writeFile: (path: string, content: string) => Promise<void>;
 }
@@ -190,6 +191,7 @@ export interface EntityToFix {
 export interface WithError<Original> {
   original: Original;
   error: CustomError;
+  tip?: string;
 }
 
 export interface WithFixChangesApplied<Original> {

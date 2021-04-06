@@ -1,9 +1,10 @@
+import { reTryMessage } from './common';
 import { CustomError, ERROR_CODES } from './custom-error';
 
 export class FailedToParseManifest extends CustomError {
   public constructor() {
     super(
-      'Failed to parse manifest. Re-run in debug mode to see more information: DEBUG=*snyk* <COMMAND>',
+      'Failed to parse manifest. ' + reTryMessage,
       ERROR_CODES.FailedToParseManifest,
     );
   }

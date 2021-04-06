@@ -5,11 +5,15 @@ import { PADDING_SPACE } from './show-results-summary';
 export function formatUnresolved(
   entity: EntityToFix,
   userMessage: string,
+  tip?: string,
 ): string {
+  console.log({userMessage});
   const name =
     entity.scanResult.identity.targetFile ||
     `${entity.scanResult.identity.type} project`;
-  return `${PADDING_SPACE}${name}\n${PADDING_SPACE}${chalk.red(
+  const tipMessage = tip ? `.\n${PADDING_SPACE}Tip:     ${tip}` : '';
+  const errorMessage = `${PADDING_SPACE}${name}\n${PADDING_SPACE}${chalk.red(
     '✖',
   )} ${chalk.red(userMessage)}`;
+  return errorMessage + tipMessage;
 }
