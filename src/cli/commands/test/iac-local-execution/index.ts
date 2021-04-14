@@ -13,6 +13,7 @@ import { cleanLocalCache, initLocalCache } from './local-cache';
 import { addIacAnalytics } from './analytics';
 import { TestResult } from '../../../../lib/snyk-test/legacy';
 import { IacFileInDirectory } from '../../../../lib/types';
+import { filterFilesByCustomPolicies } from './get-iac-org-settings';
 
 // this method executes the local processing engine and then formats the results to adapt with the CLI output.
 // the current version is dependent on files to be present locally which are not part of the source code.
@@ -30,6 +31,8 @@ export async function test(
   const filesToParse = await loadFiles(pathToScan, options);
   const { parsedFiles, failedFiles } = await parseFiles(filesToParse);
   const scannedFiles = await scanFiles(parsedFiles);
+
+  await filterFilesByCustomPolicies(scannedFiles);
   const formattedResults = formatScanResults(scannedFiles, options);
   addIacAnalytics(formattedResults);
   cleanLocalCache();
