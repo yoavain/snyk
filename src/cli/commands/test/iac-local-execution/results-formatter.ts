@@ -17,10 +17,10 @@ import { extractLineNumber } from './extract-line-number';
 
 const SEVERITIES = [SEVERITY.LOW, SEVERITY.MEDIUM, SEVERITY.HIGH];
 
-export function formatScanResults(
+export async function formatScanResults(
   scanResults: IacFileScanResult[],
   options: IaCTestFlags,
-): FormattedResult[] {
+): Promise<FormattedResult[]> {
   try {
     // Relevant only for multi-doc yaml files
     const scannedResultsGroupedByDocId = groupMultiDocResults(scanResults);
@@ -109,16 +109,20 @@ function filterPoliciesBySeverity(
   severityThreshold?: SEVERITY,
 ): PolicyMetadata[] {
   if (!severityThreshold || severityThreshold === SEVERITY.LOW) {
-    return violatedPolicies;
+    return violatedPolicies.filter((violatedPolicy) => {
+      return violatedPolicy.severity !== ('none' as SEVERITY);
+    });
   }
 
   const severitiesToInclude = SEVERITIES.slice(
     SEVERITIES.indexOf(severityThreshold),
   );
-
-  return violatedPolicies.filter((policy) =>
-    severitiesToInclude.includes(policy.severity),
-  );
+  return violatedPolicies.filter((policy) => {
+    return (
+      severitiesToInclude.includes(policy.severity) ||
+      policy.severity !== ('none' as SEVERITY)
+    );
+  });
 }
 
 export class FailedToFormatResults extends CustomError {

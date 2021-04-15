@@ -59,18 +59,15 @@ export type FormattedResult = {
   projectName: string;
 };
 
-export interface CustomPoliciesWithMeta {
+export interface IacOrgSettings {
   meta: TestMeta;
-  customPolicies: {
-    publicId: string;
-    severity: string;
-  };
+  customPolicies: Record<string, string>;
 }
 export interface TestMeta {
   isPrivate: boolean;
   isLicensesEnabled: boolean;
-  ignoreSettings: object;
   org: string;
+  ignoreSettings?: IgnoreSettings;
 }
 
 export interface OpaWasmInstance {
@@ -222,4 +219,5 @@ export enum IaCErrorCodes {
   // results-formatter errors
   FailedToFormatResults = 1070,
   FailedToExtractLineNumberError = 1071,
+  FailedToGetIacOrgSettings = 1073,
 }
