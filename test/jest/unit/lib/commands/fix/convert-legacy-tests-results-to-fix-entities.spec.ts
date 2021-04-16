@@ -17,7 +17,11 @@ describe('Convert legacy TestResult to ScanResult', () => {
     );
     const res = convertLegacyTestResultToFixEntities(
       noRemediationRes,
-      __dirname,
+      // windows proofing
+      __dirname.replace(/\\/g, '/').replace(/C:/g, ''),
+      {
+        allProjects: true,
+      },
     );
     expect(res).toMatchSnapshot();
   });
@@ -35,11 +39,18 @@ describe('Convert legacy TestResult to ScanResult', () => {
     );
     const res = convertLegacyTestResultToFixEntities(
       withRemediation,
-      path.resolve(
-        __dirname,
-        '../../../../../',
-        'acceptance/fixtures/npm-package-with-severity-override',
-      ),
+      path
+        .resolve(
+          __dirname,
+          '../../../../../',
+          'acceptance/fixtures/npm-package-with-severity-override',
+        )
+        // windows proofing
+        .replace(/\\/g, '/')
+        .replace(/C:/g, ''),
+      {
+        allProjects: true,
+      },
     );
     expect(res).toMatchSnapshot();
   });
@@ -54,7 +65,7 @@ describe('Convert legacy TestResult to ScanResult', () => {
         'utf8',
       ),
     );
-    const res = convertLegacyTestResultToFixEntities(withRemediation, '.');
+    const res = convertLegacyTestResultToFixEntities(withRemediation, '.', {});
     expect(res).toMatchSnapshot();
   });
 });
